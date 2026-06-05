@@ -22,14 +22,19 @@ class State(TypedDict):
     # Define messages (a list type, with the add_messages function used to append messages)
     messages: Annotated[list, add_messages]
 
+
+llm = init_chat_model(
+    model="gpt-5.4", 
+    model_provider="openai", 
+    temperature=0
+)
+
 tool_search = TavilySearch(
     max_results=5,
     topic="general",
 )
 
 tool_search = [tool_search]
-
-llm = init_chat_model(model="gpt-5.4", model_provider="openai", temperature=0)
 
 llm_with_tools = llm.bind_tools(tool_search)
 
